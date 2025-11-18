@@ -35,7 +35,7 @@ AudioTrack::~AudioTrack() {
     #ifdef DEBUG
     std::cout << "AudioTrack destructor called for: " << title << std::endl;
     #endif
-    delete waveform_data;
+    delete[] waveform_data;
 }
 
 AudioTrack::AudioTrack(const AudioTrack& other)
@@ -69,7 +69,7 @@ AudioTrack& AudioTrack::operator=(const AudioTrack& other) {
     #endif
     // Your code here...
     if(this != &other){
-        delete waveform_data;
+        delete[] waveform_data;
         title = other.title;
         artists = other.artists;
         duration_seconds = other.duration_seconds;
@@ -124,8 +124,8 @@ AudioTrack& AudioTrack::operator=(AudioTrack&& other) noexcept {
         other.waveform_data = nullptr;
         other.title.clear();
         other.artists.clear();
-        return *this;
     }
+    return *this;
 }
 
 void AudioTrack::get_waveform_copy(double* buffer, size_t buffer_size) const {
