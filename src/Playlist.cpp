@@ -14,6 +14,7 @@ Playlist::~Playlist() {
     #endif
 }
 
+//add track to the playlist
 void Playlist::add_track(AudioTrack* track) {
     if (!track) {
         std::cout << "[Error] Cannot add null track to playlist" << std::endl;
