@@ -41,6 +41,10 @@
         "*.h": "cpp",
         "*.cpp": "cpp",
         "*.txt": "plaintext",
+<<<<<<< HEAD
+=======
+        "new": "cpp",
+>>>>>>> 8b67b355da5a78494796b099b08287812537d04a
         "array": "cpp",
         "atomic": "cpp",
         "bit": "cpp",
@@ -88,7 +92,10 @@
         "iostream": "cpp",
         "istream": "cpp",
         "limits": "cpp",
+<<<<<<< HEAD
         "new": "cpp",
+=======
+>>>>>>> 8b67b355da5a78494796b099b08287812537d04a
         "numbers": "cpp",
         "ostream": "cpp",
         "span": "cpp",
