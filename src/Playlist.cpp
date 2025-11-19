@@ -16,12 +16,9 @@ Playlist::~Playlist() {
     while (head) {
         PlaylistNode* copy = head;
         head = head->next;
+        delete copy->track;
         delete copy;
     }
-}
-
-PlaylistNode::~PlaylistNode(){
-    delete track;
 }
 
 //add track to the playlist
@@ -60,6 +57,7 @@ void Playlist::remove_track(const std::string& title) {
         } else {
             head = current->next;
         }
+        delete current->track;
         delete current;
 
         track_count--;
