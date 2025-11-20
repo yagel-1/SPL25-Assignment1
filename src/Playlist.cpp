@@ -21,6 +21,15 @@ Playlist::~Playlist() {
     }
 }
 
+Playlist::Playlist(const Playlist& other){
+    PlaylistNode* other_curr = other.head;
+    while (other_curr) {
+        PlaylistNode* node = other.head;
+        head = node;
+
+    }
+}
+
 //add track to the playlist
 void Playlist::add_track(AudioTrack* track) {
     if (!track) {
