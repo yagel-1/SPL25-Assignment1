@@ -155,12 +155,17 @@ void DJSession::simulate_dj_performance() {
                 std::cout<< "[ERROR] playlist: \"" << playlist_name << "\" failed to load to playlist" << std::endl;
                 continue;
             }
-            for(std::string title: track_titles){
-                
+            for(std::string track_title: track_titles){
+                std::cout << "\n-- Processing: " << track_title << "--" << std::endl;
+                stats.tracks_processed++;
+                load_track_to_controller(track_title);
+                if (!load_track_to_mixer_deck(track_title)){
+                    continue;
+                }
             }
-
+            print_session_summary();
+            reset_stats();
         }
-        
     }
     else{
         while(true){
@@ -172,8 +177,19 @@ void DJSession::simulate_dj_performance() {
                 std::cout<< "[ERROR] playlist: \"" << input << "\" failed to load to playlist" << std::endl;
                 continue;
             }
+            for(std::string track_title: track_titles){
+                std::cout << "\n-- Processing: " << track_title << "--" << std::endl;
+                stats.tracks_processed++;
+                load_track_to_controller(track_title);
+                if (!load_track_to_mixer_deck(track_title)){
+                    continue;
+                }
+            }
+            print_session_summary();
+            reset_stats();
         }
     }
+    std::cout << "Session cancelled by user or all playlists played" << std::endl;
 }
 
 
@@ -262,4 +278,15 @@ void DJSession::print_session_summary() const {
     std::cout << "Transitions: " << stats.transitions << std::endl;
     std::cout << "Errors: " << stats.errors << std::endl;
     std::cout << "=== Session Complete ===" << std::endl;
+}
+
+void DJSession::reset_stats() {
+    stats.tracks_processed = 0;
+    stats.cache_hits = 0;
+    stats.cache_misses = 0;
+    stats.cache_evictions = 0;
+    stats.deck_loads_a = 0;
+    stats.deck_loads_b = 0;
+    stats.transitions = 0;
+    stats.errors = 0;
 }

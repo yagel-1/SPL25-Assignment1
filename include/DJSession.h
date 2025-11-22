@@ -120,4 +120,10 @@ private:
      * @brief Print final session summary with statistics
      */
     void print_session_summary() const;
+
+
+    /**
+     * helper function for rests all stats in simulate dj performance
+     */
+    void reset_stats();
 };
