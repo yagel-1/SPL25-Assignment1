@@ -21,27 +21,27 @@ Playlist::~Playlist() {
     }
 }
 
-Playlist::Playlist(Playlist&& other) noexcept : head(other.head), playlist_name(std::move(other.playlist_name)), track_count(other.track_count) {
-    other.head = nullptr;
-    other.track_count = 0;
-}
+// Playlist::Playlist(Playlist&& other) noexcept : head(other.head), playlist_name(std::move(other.playlist_name)), track_count(other.track_count) {
+//     other.head = nullptr;
+//     other.track_count = 0;
+// }
 
-Playlist& Playlist::operator=(Playlist&& other) noexcept {
-    if (this != &other){
-        while (head) {
-            PlaylistNode* copy = head;
-            head = head->next;
-            delete copy->track;
-            delete copy;
-        }
-        head = other.head;
-        playlist_name = std::move(other.playlist_name);
-        track_count = other.track_count;
+// Playlist& Playlist::operator=(Playlist&& other) noexcept {
+//     if (this != &other){
+//         while (head) {
+//             PlaylistNode* copy = head;
+//             head = head->next;
+//             delete copy->track;
+//             delete copy;
+//         }
+//         head = other.head;
+//         playlist_name = std::move(other.playlist_name);
+//         track_count = other.track_count;
 
-        other.head = nullptr;
-        other.track_count = 0;
-    }
-}
+//         other.head = nullptr;
+//         other.track_count = 0;
+//     }
+// }
 
 //add track to the playlist
 void Playlist::add_track(AudioTrack* track) {
