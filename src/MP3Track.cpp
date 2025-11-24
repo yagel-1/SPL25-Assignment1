@@ -30,7 +30,6 @@ void MP3Track::load() {
 
 void MP3Track::analyze_beatgrid() {
      std::cout << "[MP3Track::analyze_beatgrid] Analyzing beat grid for: \"" << title << "\"\n";
-    // TODO: Implement MP3-specific beat detection analysis
     // NOTE: Use exactly 2 spaces before each arrow (→) character
     double eb = (duration_seconds / 60.0) * bpm;
     double pf = (bitrate / 320.0);
@@ -39,7 +38,6 @@ void MP3Track::analyze_beatgrid() {
 }
 
 double MP3Track::get_quality_score() const {
-    // TODO: Implement comprehensive quality scoring
     // NOTE: This method does NOT print anything
     double base_score = (bitrate / 320.0) * 100.0;
     if(has_id3_tags){
@@ -48,10 +46,15 @@ double MP3Track::get_quality_score() const {
     if(bitrate < 128){
         base_score -= 10;
     }
-    return (base_score / 100);
+    if (base_score < 0){
+        base_score = 0;
+    }
+    else if (base_score > 100){
+        base_score = 100;
+    }
+    return base_score;
 }
 
 PointerWrapper<AudioTrack> MP3Track::clone() const {
-    // TODO: Implement polymorphic cloning
-    return PointerWrapper<AudioTrack>(new MP3Track(*this)); // Replace with your implementation
+    return PointerWrapper<AudioTrack>(new MP3Track(*this));
 }

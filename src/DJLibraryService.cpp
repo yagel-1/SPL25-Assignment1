@@ -85,7 +85,6 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
         unwrap_track->load();
         unwrap_track->analyze_beatgrid();
         playlist.add_track(unwrap_track);
-        std::cout << "Added \'"<< unwrap_track->get_title() << "\' to playlist \'" << playlist_name << "\'" << std::endl;
     }
     std::cout << "[INFO] Playlist loaded: "<< playlist_name << " (" << playlist.get_track_count() << " tracks)" << std::endl;
 }

@@ -31,43 +31,31 @@ AudioTrack::AudioTrack(const std::string& title, const std::vector<std::string>&
 // ========== TODO: STUDENTS IMPLEMENT RULE OF 5 ==========
 
 AudioTrack::~AudioTrack() {
-    // TODO: Implement the destructor
     #ifdef DEBUG
     std::cout << "AudioTrack destructor called for: " << title << std::endl;
     #endif
     delete[] waveform_data;
 }
 
-AudioTrack::AudioTrack(const AudioTrack& other)
+AudioTrack::AudioTrack(const AudioTrack& other) : title(other.title), artists(other.artists),
+        duration_seconds(other.duration_seconds), bpm(other.bpm), waveform_data(nullptr), waveform_size(other.waveform_size)
 {
-    // TODO: Implement the copy constructor
     #ifdef DEBUG
     std::cout << "AudioTrack copy constructor called for: " << other.title << std::endl;
     #endif
-    title = other.title;
-    artists = other.artists;
-    duration_seconds = other.duration_seconds;
-    bpm = other.bpm;
     if(other.waveform_data != nullptr && other.waveform_size > 0){
         waveform_data = new double[other.waveform_size]; 
-        for(int i=0; i<other.waveform_size; i++){
-            waveform_data[i]=other.waveform_data[i];
+        for(size_t i=0; i<other.waveform_size; i++){
+            waveform_data[i] = other.waveform_data[i];
         }
     }
-    else{
-        waveform_data = nullptr;
-        waveform_size = 0;
-    }    
-    waveform_size = other.waveform_size;
-
+ 
 }
 
 AudioTrack& AudioTrack::operator=(const AudioTrack& other) {
-    // TODO: Implement the copy assignment operator
     #ifdef DEBUG
     std::cout << "AudioTrack copy assignment called for: " << other.title << std::endl;
     #endif
-    // Your code here...
     if(this != &other){
         delete[] waveform_data;
         title = other.title;
@@ -76,54 +64,48 @@ AudioTrack& AudioTrack::operator=(const AudioTrack& other) {
         bpm = other.bpm;
         if(other.waveform_data != nullptr && other.waveform_size > 0){
             waveform_data = new double[other.waveform_size]; 
-            for(int i=0; i<other.waveform_size; i++){
-                waveform_data[i]=other.waveform_data[i];
+            for(size_t i=0; i<other.waveform_size; i++){
+                waveform_data[i] = other.waveform_data[i];
             }
+            waveform_size = other.waveform_size;
         }
         else{
             waveform_data = nullptr;
             waveform_size = 0;
         }    
-        waveform_size = other.waveform_size;
     }
-    
-   return *this;
+    return *this;
 }
 
-AudioTrack::AudioTrack(AudioTrack&& other) noexcept {
-    // TODO: Implement the move constructor
+AudioTrack::AudioTrack(AudioTrack&& other) noexcept : title(std::move(other.title)), artists(std::move(other.artists)),
+        duration_seconds(other.duration_seconds), bpm(other.bpm), waveform_data(other.waveform_data), waveform_size(other.waveform_size){
     #ifdef DEBUG
     std::cout << "AudioTrack move constructor called for: " << other.title << std::endl;
     #endif
-    title = other.title;
-    artists = other.artists;
-    duration_seconds = other.duration_seconds;
-    bpm = other.bpm;
-    waveform_data = other.waveform_data;
-    waveform_size = other.waveform_size; 
-
+    other.duration_seconds = 0;
+    other.bpm = 0;
     other.waveform_data = nullptr;
+    other.waveform_size = 0; 
 }
 
 AudioTrack& AudioTrack::operator=(AudioTrack&& other) noexcept {
-    // TODO: Implement the move assignment operator
-
     #ifdef DEBUG
     std::cout << "AudioTrack move assignment called for: " << other.title << std::endl;
     #endif
     if (this != &other){
         delete[] waveform_data;
 
-        title = other.title;
-        artists = other.artists;
+        title = std::move(other.title);
+        artists = std::move(other.artists);
         duration_seconds = other.duration_seconds;
         bpm = other.bpm;
         waveform_data = other.waveform_data;
         waveform_size = other.waveform_size; 
 
+        other.duration_seconds = 0;
+        other.bpm = 0;
         other.waveform_data = nullptr;
-        other.title.clear();
-        other.artists.clear();
+        other.waveform_size = 0; 
     }
     return *this;
 }
