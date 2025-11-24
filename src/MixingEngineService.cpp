@@ -22,6 +22,26 @@ MixingEngineService::~MixingEngineService() {
         deck = nullptr;
     }
 }
+/*
+* copy assigment operator
+*/
+MixingEngineService& MixingEngineService::operator=(const MixingEngineService& other){
+    if (this != &other ){
+        active_deck = other.active_deck;
+        auto_sync = other.auto_sync;
+        bpm_tolerance = other.bpm_tolerance;
+        for (int i = 0; i < 2; ++i) {
+            delete decks[i];            
+            if (other.decks[i] != nullptr) {
+                decks[i] = other.decks[i]->clone().release(); 
+            } 
+            else {
+                decks[i] = nullptr;
+            }
+        }
+    }
+    return *this;
+}
 
 
 /**

@@ -66,6 +66,16 @@ public:
      */
     ~DJSession();
 
+    /**
+     * copy constructor
+     */
+    DJSession::DJSession(const DJSession& other);
+
+    /**
+     * copy assigment operator
+     */
+    DJSession& DJSession::operator=(const DJSession& other);
+
     // ========== ORCHESTRATION METHODS ==========
 
 
