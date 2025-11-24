@@ -7,15 +7,36 @@
 
 // ========== CONSTRUCTORS & RULE OF 5 ==========
 
-
+//constructor
 DJSession::DJSession(const std::string& name, bool play_all)
     : session_name(name), play_all(play_all) {
     std::cout << "DJ Session System initialized: " << session_name << std::endl;
 }
 
-
+// destructor
 DJSession::~DJSession() {
     std::cout << "Shutting down DJ Session System: " << session_name << std::endl;
+}
+//copy constructor
+DJSession::DJSession(const DJSession& other):session_name (other.session_name), library_service(other.library_service), controller_service(other.controller_service),
+        mixing_service(other.mixing_service),config_manager(other.config_manager),session_config(other.session_config),track_titles(other.track_titles),
+        play_all(other.play_all),stats(other.stats) {
+}
+
+//copy assigment operator
+DJSession& DJSession::operator=(const DJSession& other){
+    if (this != &other){
+        session_name = other.session_name;
+        library_service = other.library_service;
+        controller_service = other.controller_service;
+        mixing_service = other.mixing_service;
+        config_manager = other.config_manager;
+        session_config = other.session_config;
+        track_titles = other.track_titles;
+        play_all = other.play_all;
+        stats = other.stats;
+    }
+    return *this;
 }
 
 // ========== CORE FUNCTIONALITY ==========
