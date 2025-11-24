@@ -94,8 +94,8 @@ size_t LRUCache::findLRUSlot() const {
                 lru_idx = i;
             }
         }
-        return lru_idx;
     }
+    return lru_idx;
 }
 
 size_t LRUCache::findEmptySlot() const {

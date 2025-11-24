@@ -105,10 +105,7 @@ void MixingEngineService::displayDeckStatus() const {
  * @return: true if BPM difference <= tolerance, false otherwise
  */
 bool MixingEngineService::can_mix_tracks(const PointerWrapper<AudioTrack>& track) const {
-    if (!decks[active_deck]){
-        return false;
-    }
-    if (!track){
+    if (!decks[active_deck] || !track){
         return false;
     }
     int deck_bpm = decks[active_deck]->get_bpm();

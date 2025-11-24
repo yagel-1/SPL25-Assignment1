@@ -14,7 +14,7 @@ DJLibraryService::DJLibraryService(const Playlist& playlist)
  * @param library_tracks Vector of track info from config
  */
 void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>& library_tracks) {
-    for (int i = 0; i < library_tracks.size(); i++){
+    for (size_t i = 0; i < library_tracks.size(); i++){
         std::string type = library_tracks[i].type;
         if(type == "MP3"){
             library.push_back(new MP3Track(library_tracks[i].title,library_tracks[i].artists, 
