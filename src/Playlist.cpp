@@ -21,27 +21,64 @@ Playlist::~Playlist() {
     }
 }
 
-// Playlist::Playlist(Playlist&& other) noexcept : head(other.head), playlist_name(std::move(other.playlist_name)), track_count(other.track_count) {
-//     other.head = nullptr;
-//     other.track_count = 0;
-// }
+Playlist::Playlist(const Playlist& other) : head(nullptr), playlist_name(other.playlist_name), track_count(other.track_count){
+    PlaylistNode* curr_other = other.head;
+    PlaylistNode* last_new_node = nullptr;
+    while (curr_other){
+        AudioTrack* copy_track = nullptr;
+        if (curr_other->track){
+            copy_track = curr_other->track->clone().release();
+        }
+        PlaylistNode* new_node = new PlaylistNode(copy_track);
+        
+        if(!head){
+            head = new_node;
+        }
+        else{
+            last_new_node->next = new_node;
+        }
+        last_new_node = new_node;
+        curr_other = curr_other->next;
+    }
+}
 
-// Playlist& Playlist::operator=(Playlist&& other) noexcept {
-//     if (this != &other){
-//         while (head) {
-//             PlaylistNode* copy = head;
-//             head = head->next;
-//             delete copy->track;
-//             delete copy;
-//         }
-//         head = other.head;
-//         playlist_name = std::move(other.playlist_name);
-//         track_count = other.track_count;
+Playlist& Playlist::operator=(const Playlist& other){
+    if (this != &other){
+        Playlist new_copy(other);
 
-//         other.head = nullptr;
-//         other.track_count = 0;
-//     }
-// }
+        PlaylistNode* temp_head = head;
+        head = new_copy.head;
+        new_copy.head = temp_head;
+
+        playlist_name = new_copy.playlist_name;
+        track_count = new_copy.track_count;
+    }
+    return *this;
+}
+
+
+Playlist::Playlist(Playlist&& other) noexcept : head(other.head), playlist_name(std::move(other.playlist_name)), track_count(other.track_count) {
+    other.head = nullptr;
+    other.track_count = 0;
+}
+
+Playlist& Playlist::operator=(Playlist&& other) noexcept {
+    if (this != &other){
+        while (head) {
+            PlaylistNode* copy = head;
+            head = head->next;
+            delete copy->track;
+            delete copy;
+        }
+        head = other.head;
+        playlist_name = std::move(other.playlist_name);
+        track_count = other.track_count;
+
+        other.head = nullptr;
+        other.track_count = 0;
+    }
+    return *this;
+}
 
 //add track to the playlist
 void Playlist::add_track(AudioTrack* track) {
