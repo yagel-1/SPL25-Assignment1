@@ -43,6 +43,17 @@ MixingEngineService& MixingEngineService::operator=(const MixingEngineService& o
     return *this;
 }
 
+/*
+* copy constructor
+*/
+MixingEngineService::MixingEngineService(const MixingEngineService& other): active_deck(other.active_deck), auto_sync(other.auto_sync),
+                                                                            bpm_tolerance(other.bpm_tolerance), decks{nullptr,nullptr}{
+    for(int i= 0; i < 2; i++){
+        if(other.decks[i] != nullptr)
+        decks[i] = other.decks[i]->clone().release();
+    }
+}
+
 
 /**
  * TODO: Implement loadTrackToDeck method
