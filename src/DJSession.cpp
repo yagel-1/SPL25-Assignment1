@@ -98,7 +98,7 @@ bool DJSession::load_track_to_mixer_deck(const std::string& track_title) {
         stats.errors++;
         return false;
     }
-    int res = controller_service.loadTrackToCache(*track);
+    int res = mixing_service.loadTrackToDeck(*track);
     if(res == 0){
         stats.deck_loads_a++;
         stats.transitions++;
@@ -159,9 +159,11 @@ void DJSession::simulate_dj_performance() {
                 std::cout << "\n-- Processing: " << track_title << "--" << std::endl;
                 stats.tracks_processed++;
                 load_track_to_controller(track_title);
+                controller_service.displayCacheStatus();
                 if (!load_track_to_mixer_deck(track_title)){
                     continue;
                 }
+                mixing_service.displayDeckStatus();
             }
             print_session_summary();
             reset_stats();
@@ -181,9 +183,11 @@ void DJSession::simulate_dj_performance() {
                 std::cout << "\n-- Processing: " << track_title << "--" << std::endl;
                 stats.tracks_processed++;
                 load_track_to_controller(track_title);
+                controller_service.displayCacheStatus();
                 if (!load_track_to_mixer_deck(track_title)){
                     continue;
                 }
+                mixing_service.displayDeckStatus();
             }
             print_session_summary();
             reset_stats();
