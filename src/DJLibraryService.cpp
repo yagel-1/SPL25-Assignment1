@@ -6,9 +6,26 @@
 #include <memory>
 #include <filesystem>
 
-
+//constructor
 DJLibraryService::DJLibraryService(const Playlist& playlist) 
     : playlist(playlist) {}
+
+//destructor
+DJLibraryService::~DJLibraryService(){
+    library.clear();
+}
+
+// copy constructor
+DJLibraryService::DJLibraryService(const DJLibraryService& other): playlist(other.playlist),library(other.library){
+}
+//copy assigment operator
+DJLibraryService& DJLibraryService::operator=(const DJLibraryService& other) {
+    if (this != &other){
+        playlist = other.playlist;
+        library = other.library;
+    }
+    return *this;
+}
 /**
  * @brief Load a playlist from track indices referencing the library
  * @param library_tracks Vector of track info from config
