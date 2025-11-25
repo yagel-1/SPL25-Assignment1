@@ -85,7 +85,7 @@ size_t LRUCache::findSlot(const std::string& track_id) const {
  * TODO: Implement the findLRUSlot() method for LRUCache
  */
 size_t LRUCache::findLRUSlot() const {
-    size_t min = -1;
+    uint64_t min = (uint64_t)-1;
     size_t lru_idx = max_size;
     for (size_t i = 0; i < max_size; ++i) {
         if (slots[i].isOccupied()){

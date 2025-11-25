@@ -69,12 +69,12 @@ public:
     /**
      * copy constructor
      */
-    DJSession::DJSession(const DJSession& other);
+    DJSession(const DJSession& other);
 
     /**
      * copy assigment operator
      */
-    DJSession& DJSession::operator=(const DJSession& other);
+    DJSession& operator=(const DJSession& other);
 
     // ========== ORCHESTRATION METHODS ==========
 
