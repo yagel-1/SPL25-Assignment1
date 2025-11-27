@@ -8,7 +8,7 @@
 
 //constructor
 DJLibraryService::DJLibraryService(const Playlist& playlist) 
-    : playlist(playlist) {}
+    : playlist(playlist), library() {}
 
 //destructor
 DJLibraryService::~DJLibraryService(){
@@ -89,7 +89,7 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
     std::cout << "[INFO] Loading playlist: " << playlist_name << std::endl;
     playlist = Playlist(playlist_name);
     for (int index : track_indices){
-        if ((index-1) < 0 || (index-1) >= library.size()){
+        if ((index-1) < 0 || (index-1) >= (int)library.size()){
             std::cout << "[WARNING] Invalid track index: " << index << std::endl;
             continue;
         }
