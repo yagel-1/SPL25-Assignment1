@@ -175,7 +175,6 @@ void DJSession::simulate_dj_performance() {
                 mixing_service.displayDeckStatus();
             }
             print_session_summary();
-            reset_stats();
         }
     }
     else{
@@ -199,7 +198,6 @@ void DJSession::simulate_dj_performance() {
                 mixing_service.displayDeckStatus();
             }
             print_session_summary();
-            reset_stats();
         }
     }
     std::cout << "Session cancelled by user or all playlists played" << std::endl;
