@@ -36,12 +36,10 @@ void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>&
         if(type == "MP3"){
             library.push_back(new MP3Track(library_tracks[i].title,library_tracks[i].artists, 
                 library_tracks[i].duration_seconds, library_tracks[i].bpm, library_tracks[i].extra_param1, library_tracks[i].extra_param2));
-            std::cout << "MP3Track created: " << library_tracks[i].extra_param1 << " kbps" << std::endl;
         }
         else{
             library.push_back(new WAVTrack(library_tracks[i].title,library_tracks[i].artists, 
                 library_tracks[i].duration_seconds, library_tracks[i].bpm, library_tracks[i].extra_param1, library_tracks[i].extra_param2));
-            std::cout << "WAVTrack created: " << library_tracks[i].extra_param1 << "Hz/" << library_tracks[i].extra_param2 << "bit" << std::endl; 
         }
     }
     std::cout << "[INFO] Track library built: " << library_tracks.size() << " tracks loaded" << std::endl;
@@ -89,7 +87,7 @@ void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name,
     std::cout << "[INFO] Loading playlist: " << playlist_name << std::endl;
     playlist = Playlist(playlist_name);
     for (int index : track_indices){
-        if ((index-1) < 0 || (index-1) >= library.size()){
+        if ((index-1) < 0 || (index-1) >= (int)library.size()){
             std::cout << "[WARNING] Invalid track index: " << index << std::endl;
             continue;
         }

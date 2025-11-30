@@ -9,7 +9,16 @@
 
 //constructor
 DJSession::DJSession(const std::string& name, bool play_all)
-    : session_name(name), play_all(play_all) {
+    : session_name(name),
+    library_service(),
+    controller_service(),
+    mixing_service(),
+    config_manager(),
+    session_config(),
+    track_titles(),
+    play_all(play_all),
+    stats()
+      {
     std::cout << "DJ Session System initialized: " << session_name << std::endl;
 }
 
@@ -166,7 +175,6 @@ void DJSession::simulate_dj_performance() {
                 mixing_service.displayDeckStatus();
             }
             print_session_summary();
-            reset_stats();
         }
     }
     else{
@@ -190,7 +198,6 @@ void DJSession::simulate_dj_performance() {
                 mixing_service.displayDeckStatus();
             }
             print_session_summary();
-            reset_stats();
         }
     }
     std::cout << "Session cancelled by user or all playlists played" << std::endl;
@@ -282,15 +289,4 @@ void DJSession::print_session_summary() const {
     std::cout << "Transitions: " << stats.transitions << std::endl;
     std::cout << "Errors: " << stats.errors << std::endl;
     std::cout << "=== Session Complete ===" << std::endl;
-}
-
-void DJSession::reset_stats() {
-    stats.tracks_processed = 0;
-    stats.cache_hits = 0;
-    stats.cache_misses = 0;
-    stats.cache_evictions = 0;
-    stats.deck_loads_a = 0;
-    stats.deck_loads_b = 0;
-    stats.transitions = 0;
-    stats.errors = 0;
 }

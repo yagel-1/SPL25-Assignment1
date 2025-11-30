@@ -7,7 +7,7 @@
  * TODO: Implement MixingEngineService constructor
  */
 MixingEngineService::MixingEngineService()
-    : decks{nullptr, nullptr}, active_deck(0), auto_sync(false), bpm_tolerance(0)
+    : decks(), active_deck(1), auto_sync(false), bpm_tolerance(0)
 {
     std::cout << "[MixingEngineService] Initialized with 2 empty decks" << std::endl;
 }
@@ -46,8 +46,8 @@ MixingEngineService& MixingEngineService::operator=(const MixingEngineService& o
 /*
 * copy constructor
 */
-MixingEngineService::MixingEngineService(const MixingEngineService& other): active_deck(other.active_deck), auto_sync(other.auto_sync),
-                                                                            bpm_tolerance(other.bpm_tolerance), decks{nullptr,nullptr}{
+MixingEngineService::MixingEngineService(const MixingEngineService& other):  decks{nullptr,nullptr}, active_deck(other.active_deck),
+                                        auto_sync(other.auto_sync), bpm_tolerance(other.bpm_tolerance){
     for(int i= 0; i < 2; i++){
         if(other.decks[i] != nullptr)
         decks[i] = other.decks[i]->clone().release();
