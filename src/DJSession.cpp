@@ -29,7 +29,7 @@ DJSession::~DJSession() {
 
 // ========== CORE FUNCTIONALITY ==========
 bool DJSession::load_playlist(const std::string& playlist_name)  {
-    std::cout << "[SYSTEM] Loading playlist: " << playlist_name << "\n";
+    std::cout << "[System] Loading playlist: " << playlist_name << "\n";
     
     // Find the playlist in the session config
     auto it = session_config.playlists.find(playlist_name);
@@ -78,7 +78,7 @@ int DJSession::load_track_to_controller(const std::string& track_name) {
         stats.errors++;
         return 0;
     }
-    std::cout<< "[SYSTEM] Loading track \'" << track_name << "\' to controller..." << std::endl;
+    std::cout<< "[System] Loading track \'" << track_name << "\' to controller..." << std::endl;
     int res = controller_service.loadTrackToCache(*track);
     if(res == 1){
         stats.cache_hits++;
@@ -165,7 +165,7 @@ void DJSession::simulate_dj_performance() {
                 continue;
             }
             for(std::string track_title: track_titles){
-                std::cout << "\n-- Processing: " << track_title << "--" << std::endl;
+                std::cout << "\n-- Processing: " << track_title << "---" << std::endl;
                 stats.tracks_processed++;
                 load_track_to_controller(track_title);
                 controller_service.displayCacheStatus();

@@ -31,9 +31,9 @@ void MP3Track::load() {
 void MP3Track::analyze_beatgrid() {
      std::cout << "[MP3Track::analyze_beatgrid] Analyzing beat grid for: \"" << title << "\"\n";
     // NOTE: Use exactly 2 spaces before each arrow (→) character
-    double eb = (duration_seconds / 60.0) * bpm;
+    int eb = (duration_seconds / 60.0) * bpm;
     double pf = (bitrate / 320.0);
-    std::cout <<"  → Estimated beats:" << eb <<"  → compression precision factor:" << pf <<std::endl;
+    std::cout <<"  → Estimated beats: " << eb <<"  → compression precision factor: " << pf <<std::endl;
 
 }
 

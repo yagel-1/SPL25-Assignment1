@@ -15,7 +15,7 @@ void WAVTrack::load() {
     // NOTE: Use exactly 2 spaces before the arrow (→) character
     std::cout << "[WAVTrack::load] Loading WAV: \"" << title << "\" at " << sample_rate << "HZ/" << bit_depth << "bit (uncopressed)..." << std::endl;
     long size = duration_seconds * sample_rate * (bit_depth / 8) * 2;
-    std::cout << "  → Estimated file size: " << size << "bytes" << std::endl;
+    std::cout << "  → Estimated file size: " << size << " bytes" << std::endl;
     std::cout << "  → Fast loading due to uncompressed format." << std::endl;
 
 }
