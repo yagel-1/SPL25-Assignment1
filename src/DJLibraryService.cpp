@@ -8,7 +8,7 @@
 
 //constructor
 DJLibraryService::DJLibraryService(const Playlist& playlist) 
-    : playlist(playlist) {}
+    : playlist(playlist), library() {}
 
 //destructor
 DJLibraryService::~DJLibraryService(){

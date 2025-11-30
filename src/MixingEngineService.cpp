@@ -71,7 +71,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
         target = 1 - active_deck;
     }
 
-    std::cout << "\n=== Loading to Deck ===" << std::endl;
+    std::cout << "\n=== Loading Track to Deck ===" << std::endl;
 
     PointerWrapper<AudioTrack> wrap_track;
     wrap_track = track.clone();

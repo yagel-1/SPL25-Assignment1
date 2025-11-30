@@ -20,7 +20,7 @@ DJSession::~DJSession() {
 
 // ========== CORE FUNCTIONALITY ==========
 bool DJSession::load_playlist(const std::string& playlist_name)  {
-    std::cout << "[System] Loading playlist: " << playlist_name << "\n";
+    std::cout << "[SYSTEM] Loading playlist: " << playlist_name << "\n";
     
     // Find the playlist in the session config
     auto it = session_config.playlists.find(playlist_name);
