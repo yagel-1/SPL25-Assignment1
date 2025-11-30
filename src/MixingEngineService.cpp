@@ -30,7 +30,7 @@ MixingEngineService& MixingEngineService::operator=(const MixingEngineService& o
         active_deck = other.active_deck;
         auto_sync = other.auto_sync;
         bpm_tolerance = other.bpm_tolerance;
-        for (int i = 0; i < 2; ++i) {
+        for (int i = 0; i < 2; i++) {
             delete decks[i];            
             if (other.decks[i] != nullptr) {
                 decks[i] = other.decks[i]->clone().release(); 
@@ -98,7 +98,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     }
     decks[target] = wrap_track.release();
 
-    std::cout << "[Load Complete] " << decks[target]->get_title() << " is now loaded in deck "<< target << std::endl;
+    std::cout << "[Load Complete] \'" << decks[target]->get_title() << " \' is now loaded on deck "<< target << std::endl;
     if (!first_track && decks[active_deck]){
         std::cout << "[Unload] Unloading previous deck "<< active_deck << " (" << decks[active_deck]->get_title() << ")" << std::endl;
         delete decks[active_deck];
