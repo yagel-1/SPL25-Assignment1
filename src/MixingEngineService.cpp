@@ -93,7 +93,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     wrap_track->analyze_beatgrid();
 
     bool active_deck_exists = decks[active_deck];
-    if (active_deck_exists && auto_sync && can_mix_tracks(wrap_track)){
+    if (active_deck_exists && auto_sync && !can_mix_tracks(wrap_track)){
         sync_bpm(wrap_track);
     }
     decks[target] = wrap_track.release();
