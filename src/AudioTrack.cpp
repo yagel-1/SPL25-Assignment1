@@ -35,6 +35,7 @@ AudioTrack::~AudioTrack() {
     std::cout << "AudioTrack destructor called for: " << title << std::endl;
     #endif
     delete[] waveform_data;
+    waveform_data = nullptr;
 }
 //copy constructor
 AudioTrack::AudioTrack(const AudioTrack& other) : title(other.title), artists(other.artists),
