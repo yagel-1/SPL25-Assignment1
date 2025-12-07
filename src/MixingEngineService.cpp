@@ -1,15 +1,15 @@
 #include "MixingEngineService.h"
 #include <iostream>
 #include <memory>
-
-
+// #include <cstdlib>
+// #include <climits>
 /**
  * TODO: Implement MixingEngineService constructor
  */
 MixingEngineService::MixingEngineService()
     : decks(), active_deck(1), auto_sync(false), bpm_tolerance(0)
 {
-    std::cout << "[MixingEngineService] Initialized with 2 empty decks" << std::endl;
+    std::cout << "[MixingEngineService] Initialized with 2 empty decks." << std::endl;
 }
 
 /**
@@ -98,12 +98,7 @@ int MixingEngineService::loadTrackToDeck(const AudioTrack& track) {
     }
     decks[target] = wrap_track.release();
 
-    std::cout << "[Load Complete] \'" << decks[target]->get_title() << " \' is now loaded on deck "<< target << std::endl;
-    if (!first_track && decks[active_deck]){
-        std::cout << "[Unload] Unloading previous deck "<< active_deck << " (" << decks[active_deck]->get_title() << ")" << std::endl;
-        delete decks[active_deck];
-        decks[active_deck] = nullptr;
-    }
+    std::cout << "[Load Complete] \'" << decks[target]->get_title() << "\' is now loaded on deck "<< target << std::endl;
 
     active_deck = target;
     std::cout << "[Active Deck] Switched to deck "<< target << std::endl;
@@ -141,7 +136,7 @@ bool MixingEngineService::can_mix_tracks(const PointerWrapper<AudioTrack>& track
     }
     int deck_bpm = decks[active_deck]->get_bpm();
     int track_bpm = track->get_bpm(); 
-    return (deck_bpm - track_bpm <= bpm_tolerance) || (track_bpm - deck_bpm <= bpm_tolerance);
+    return std::abs(deck_bpm-track_bpm)<=bpm_tolerance;//deck_bpm - track_bpm <= bpm_tolerance) || (track_bpm - deck_bpm <= bpm_tolerance);
 }
 
 /**

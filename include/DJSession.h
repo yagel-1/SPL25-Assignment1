@@ -130,4 +130,9 @@ private:
      * @brief Print final session summary with statistics
      */
     void print_session_summary() const;
+
+    /**
+     * play all the tracks of given playlist
+     */
+    void start_playlist(std::string playlist_name);
 };

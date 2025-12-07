@@ -160,21 +160,7 @@ void DJSession::simulate_dj_performance() {
         }
         std::sort(playlist_names.begin(), playlist_names.end());
         for (std::string playlist_name : playlist_names ){
-            if(!load_playlist(playlist_name)){
-                std::cout<< "[ERROR] playlist: \"" << playlist_name << "\" failed to load to playlist" << std::endl;
-                continue;
-            }
-            for(std::string track_title: track_titles){
-                std::cout << "\n-- Processing: " << track_title << "---" << std::endl;
-                stats.tracks_processed++;
-                load_track_to_controller(track_title);
-                controller_service.displayCacheStatus();
-                if (!load_track_to_mixer_deck(track_title)){
-                    continue;
-                }
-                mixing_service.displayDeckStatus();
-            }
-            print_session_summary();
+            start_playlist(playlist_name);
         }
     }
     else{
@@ -183,24 +169,10 @@ void DJSession::simulate_dj_performance() {
             if(input ==""){
                 break;
             }
-            if(!load_playlist(input)){
-                std::cout<< "[ERROR] playlist: \"" << input << "\" failed to load to playlist" << std::endl;
-                continue;
-            }
-            for(std::string track_title: track_titles){
-                std::cout << "\n-- Processing: " << track_title << "--" << std::endl;
-                stats.tracks_processed++;
-                load_track_to_controller(track_title);
-                controller_service.displayCacheStatus();
-                if (!load_track_to_mixer_deck(track_title)){
-                    continue;
-                }
-                mixing_service.displayDeckStatus();
-            }
-            print_session_summary();
+            start_playlist(input);
         }
     }
-    std::cout << "Session cancelled by user or all playlists played" << std::endl;
+    std::cout << "Session cancelled by user or all playlists played." << std::endl;
 }
 
 
@@ -289,4 +261,23 @@ void DJSession::print_session_summary() const {
     std::cout << "Transitions: " << stats.transitions << std::endl;
     std::cout << "Errors: " << stats.errors << std::endl;
     std::cout << "=== Session Complete ===" << std::endl;
+}
+
+void DJSession::start_playlist(std::string playlist_name){
+    if(!load_playlist(playlist_name)){
+            std::cout<< "[ERROR] playlist: \"" << playlist_name << "\" failed to load to playlist" << std::endl;
+            return;
+        }
+        std::reverse(track_titles.begin(), track_titles.end());
+        for(std::string track_title: track_titles){
+            std::cout << "\n--- Processing: " << track_title << " ---" << std::endl;
+            stats.tracks_processed++;
+            load_track_to_controller(track_title);
+            controller_service.displayCacheStatus();
+            if (!load_track_to_mixer_deck(track_title)){
+                continue;
+            }
+            mixing_service.displayDeckStatus();
+        }
+        print_session_summary();
 }

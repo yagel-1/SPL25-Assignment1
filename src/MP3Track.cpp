@@ -18,7 +18,7 @@ void MP3Track::load() {
     // TODO: Implement MP3 loading with format-specific operations
     // NOTE: Use exactly 2 spaces before the arrow (→) character
     if(has_id3_tags){
-        std::cout <<"  → Processing ID3 metadata (artist info, album art, etc.) ..." << std::endl;
+        std::cout <<"  → Processing ID3 metadata (artist info, album art, etc.)..." << std::endl;
     }
     else{
         std::cout <<"  → No ID3 tags found" <<std::endl;
@@ -33,7 +33,7 @@ void MP3Track::analyze_beatgrid() {
     // NOTE: Use exactly 2 spaces before each arrow (→) character
     int eb = (duration_seconds / 60.0) * bpm;
     double pf = (bitrate / 320.0);
-    std::cout <<"  → Estimated beats: " << eb <<"  → compression precision factor: " << pf <<std::endl;
+    std::cout <<"  → Estimated beats: " << eb <<"  → Compression precision factor: " << pf <<std::endl;
 
 }
 
