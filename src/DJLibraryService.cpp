@@ -6,16 +6,46 @@
 #include <memory>
 #include <filesystem>
 
-
+//constructor
 DJLibraryService::DJLibraryService(const Playlist& playlist) 
-    : playlist(playlist) {}
+    : playlist(playlist), library() {}
+
+//destructor
+DJLibraryService::~DJLibraryService(){
+    for(AudioTrack* AT : library){
+        delete AT;
+        AT = nullptr;
+    }
+}
+
+// copy constructor
+DJLibraryService::DJLibraryService(const DJLibraryService& other): playlist(other.playlist),library(other.library){
+}
+//copy assigment operator
+DJLibraryService& DJLibraryService::operator=(const DJLibraryService& other) {
+    if (this != &other){
+        playlist = other.playlist;
+        library = other.library;
+    }
+    return *this;
+}
 /**
  * @brief Load a playlist from track indices referencing the library
  * @param library_tracks Vector of track info from config
  */
 void DJLibraryService::buildLibrary(const std::vector<SessionConfig::TrackInfo>& library_tracks) {
-    //Todo: Implement buildLibrary method
-    std::cout << "TODO: Implement DJLibraryService::buildLibrary method\n"<< library_tracks.size() << " tracks to be loaded into library.\n";
+    for (size_t i = 0; i < library_tracks.size(); i++){
+        std::string type = library_tracks[i].type;
+        if(type == "MP3"){
+            library.push_back(new MP3Track(library_tracks[i].title,library_tracks[i].artists, 
+                library_tracks[i].duration_seconds, library_tracks[i].bpm, library_tracks[i].extra_param1, library_tracks[i].extra_param2));
+        }
+        else{
+            library.push_back(new WAVTrack(library_tracks[i].title,library_tracks[i].artists, 
+                library_tracks[i].duration_seconds, library_tracks[i].bpm, library_tracks[i].extra_param1, library_tracks[i].extra_param2));
+        }
+    }
+    std::cout << "[INFO] Track library built: " << library_tracks.size() << " tracks loaded" << std::endl;
 }
 
 /**
@@ -43,7 +73,6 @@ void DJLibraryService::displayLibrary() const {
  * @return Playlist& 
  */
 Playlist& DJLibraryService::getPlaylist() {
-    // Your implementation here
     return playlist;
 }
 
@@ -53,22 +82,38 @@ Playlist& DJLibraryService::getPlaylist() {
  * HINT: Leverage Playlist's find_track method
  */
 AudioTrack* DJLibraryService::findTrack(const std::string& track_title) {
-    // Your implementation here
-    return nullptr; // Placeholder
+    return playlist.find_track(track_title);
 }
 
 void DJLibraryService::loadPlaylistFromIndices(const std::string& playlist_name, 
-                                               const std::vector<int>& track_indices) {
-    // Your implementation here
-    // For now, add a placeholder to fix the linker error
-    (void)playlist_name;  // Suppress unused parameter warning
-    (void)track_indices;  // Suppress unused parameter warning
+                                                const std::vector<int>& track_indices) {
+    std::cout << "[INFO] Loading playlist: " << playlist_name << std::endl;
+    playlist = Playlist(playlist_name);
+    for (int index : track_indices){
+        if ((index-1) < 0 || (index-1) >= (int)library.size()){
+            std::cout << "[WARNING] Invalid track index: " << index << std::endl;
+            continue;
+        }
+        PointerWrapper<AudioTrack> wrap_track = library[index-1]->clone();
+        if (!wrap_track){
+            std::cout << "[ERROR] Track: \""<< library[index-1]->get_title() << "\" failed to clone" << std::endl;
+            continue;
+        }
+        AudioTrack* unwrap_track = wrap_track.release();
+        unwrap_track->load();
+        unwrap_track->analyze_beatgrid();
+        playlist.add_track(unwrap_track);
+    }
+    std::cout << "[INFO] Playlist loaded: "<< playlist_name << " (" << playlist.get_track_count() << " tracks)" << std::endl;
 }
 /**
  * TODO: Implement getTrackTitles method
  * @return Vector of track titles in the playlist
  */
 std::vector<std::string> DJLibraryService::getTrackTitles() const {
-    // Your implementation here
-    return std::vector<std::string>(); // Placeholder
+    std::vector<std::string> tracks_titles = std::vector<std::string>();
+    for (AudioTrack* track : playlist.getTracks()){
+        tracks_titles.push_back(track->get_title());
+    }
+    return tracks_titles;
 }

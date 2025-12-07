@@ -39,7 +39,7 @@ private:
     ConfigurationManager config_manager;
     SessionConfig session_config;
     std::vector<std::string> track_titles;
-    bool play_all = false;
+    bool play_all;
     // Session statistics
     struct SessionStats {
         size_t tracks_processed = 0;
@@ -65,6 +65,16 @@ public:
      * @brief Destructor
      */
     ~DJSession();
+
+    /**
+     * copy constructor
+     */
+    DJSession(const DJSession& other);
+
+    /**
+     * copy assigment operator
+     */
+    DJSession& operator=(const DJSession& other);
 
     // ========== ORCHESTRATION METHODS ==========
 
@@ -120,4 +130,9 @@ private:
      * @brief Print final session summary with statistics
      */
     void print_session_summary() const;
+
+    /**
+     * play all the tracks of given playlist
+     */
+    void start_playlist(std::string playlist_name);
 };
