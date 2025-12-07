@@ -12,7 +12,10 @@ DJLibraryService::DJLibraryService(const Playlist& playlist)
 
 //destructor
 DJLibraryService::~DJLibraryService(){
-    library.clear();
+    for(AudioTrack* AT : library){
+        delete AT;
+        AT = nullptr;
+    }
 }
 
 // copy constructor

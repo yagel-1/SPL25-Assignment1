@@ -21,6 +21,9 @@ MixingEngineService::~MixingEngineService() {
         delete deck;
         deck = nullptr;
     }
+    active_deck = 0;
+    auto_sync = false;
+    bpm_tolerance = 0;
 }
 /*
 * copy assigment operator

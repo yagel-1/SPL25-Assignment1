@@ -36,6 +36,11 @@ AudioTrack::~AudioTrack() {
     #endif
     delete[] waveform_data;
     waveform_data = nullptr;
+    title.clear();
+    artists.clear();
+    duration_seconds = 0;
+    bpm = 0; 
+    waveform_size = 0;
 }
 //copy constructor
 AudioTrack::AudioTrack(const AudioTrack& other) : title(other.title), artists(other.artists),
